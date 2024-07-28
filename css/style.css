@@ -1,7 +1,7 @@
 /* style.css */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #111;
+    background-color: #94ffa4; /* 背景色を変更する */
     color: #fff;
     margin: 0;
     padding: 0;
@@ -14,21 +14,20 @@ body {
 .container {
     width: 300px;
     padding: 20px;
-    background-color: #1a1a1a;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(74, 74, 74, 0.5);
     margin: 20px;
 }
 .title img {
-    width: 100%; /* この行を変更します */
-    height: auto; /* この行を変更します */
+    width: 100%;
+    height: auto;
     border-radius: 10px;
 }
 .menu-item {
     position: relative;
     margin: 20px 0;
     padding: 10px;
-    background-color: #333;
+    background-color: #3c3c3c;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
@@ -43,10 +42,10 @@ body {
 .description {
     display: none;
     position: absolute;
-    left: 100px;
+    left: 320px;
     top: 50%;
     transform: translateY(-50%);
-    width: 300px;
+    width: 200px;
     background-color: #222;
     padding: 10px;
     border: 1px solid #555;
