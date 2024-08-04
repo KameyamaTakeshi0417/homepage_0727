@@ -94,3 +94,27 @@ body {
     display: none; /* 初期状態では非表示 */
     pointer-events: none; /* テキストボックスにマウスイベントを通さない */
 }
+
+/* ボタンのスタイル */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0; /* 上下に余白を追加 */
+}
+
+.cta-button {
+    background-color: #00c853; /* 明るい緑色でボタンを目立たせる */
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #00e676; /* ホバー時の色をさらに明るく */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
