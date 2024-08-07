@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hobby Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .left-images {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-images img {
+            max-width: 80%;
+            max-height: 30%;
+            margin: 10px 0;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .right-text {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .text-block {
+            margin: 20px 0;
+        }
+
+        .slide-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" id="slide1" data-speed="50">
+        <div class="left-images">
+            <!-- 1から3枚の画像をここに追加 -->
+        </div>
+        <div class="right-text">
+            <div class="slide-title">Title 1</div>
+            <div class="text-block">
+                <p>This is the first block of text for slide 1.</p>
+            </div>
+            <div class="text-block">
+                <p>This is the second block of text for slide 1. It may have<br>multiple lines and various content.</p>
+            </div>
+            <div class="text-block">
+                <p>This is the third block of text for slide 1.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide2" data-speed="100">
+        <div class="left-images">
+            <!-- 1から3枚の画像をここに追加 -->
+        </div>
+        <div class="right-text">
+            <div class="slide-title">Title 2</div>
+            <div class="text-block">
+                <p>This is the description for slide 2. It can be as long as<br> necessary and contain multiple lines.</p>
+            </div>
+            <div class="text-block">
+                <p>Additional text for slide 2, in another block.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide3" data-speed="75">
+        <div class="left-images">
+            <!-- 1から3枚の画像をここに追加 -->
+        </div>
+        <div class="right-text">
+            <div class="slide-title">Title 3</div>
+            <div class="text-block">
+                <p>This is the description for slide 3. This slide has<br>multiple blocks of text.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide4" data-speed="50">
+        <div class="left-images">
+            <!-- 1から3枚の画像をここに追加 -->
+        </div>
+        <div class="right-text">
+            <div class="slide-title">Title 4</div>
+            <div class="text-block">
+                <p>This is the description for slide 4. It can contain<br>different amounts of text in each block.</p>
+            </div>
+            <div class="text-block">
+                <p>Additional text block for slide 4.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                const imageContainer = slide.querySelector('.left-images');
+                const numImages = Math.floor(Math.random() * 3) + 1; // 1から3枚の画像をランダムに配置
+
+                for (let i = 0; i < numImages; i++) {
+                    const img = document.createElement('img');
+                    img.src = `../image/hobby/${index + 1}/${Math.floor(Math.random() * 10) + 1}.png`;
+                    imageContainer.appendChild(img);
+                }
+
+                // タイプライター効果の実装
+                const textBlocks = slide.querySelectorAll('.text-block p');
+                const speed = slide.getAttribute('data-speed');
+
+                textBlocks.forEach(block => {
+                    const text = block.innerHTML;
+                    block.innerHTML = '';
+                    let i = 0;
+
+                    function typeWriter() {
+                        if (i < text.length) {
+                            block.innerHTML += text.charAt(i);
+                            i++;
+                            setTimeout(typeWriter, speed);
+                        }
+                    }
+                    typeWriter();
+                });
+            });
+        });
+
+        window.addEventListener('beforeunload', function() {
+            const textBlocks = document.querySelectorAll('.text-block p');
+            textBlocks.forEach(block => {
+                block.innerHTML = ''; // テキスト表示量をリセット
+            });
+        });
+    </script>
+</body>
+</html>

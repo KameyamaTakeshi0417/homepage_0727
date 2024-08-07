@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hobby Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .slide-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .image-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .image-container img {
+            position: absolute;
+            max-width: 100px;
+            max-height: 100px;
+            transition: transform 0.5s ease;
+        }
+
+        /* 画像のアニメーション */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25%, 75% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .shake {
+            animation: shake 2s infinite;
+        }
+
+        .pulse {
+            animation: pulse 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide" id="slide1">
+        <div class="slide-title">Title 1</div>
+        <div class="slide-content">
+            <p>This is the description for slide 1.</p>
+        </div>
+        <div class="image-container">
+            <!-- ここにランダムに配置された画像を追加 -->
+        </div>
+    </div>
+
+    <div class="slide" id="slide2">
+        <div class="slide-title">Title 2</div>
+        <div class="slide-content">
+            <p>This is the description for slide 2.</p>
+        </div>
+        <div class="image-container">
+            <!-- ここにランダムに配置された画像を追加 -->
+        </div>
+    </div>
+
+    <div class="slide" id="slide3">
+        <div class="slide-title">Title 3</div>
+        <div class="slide-content">
+            <p>This is the description for slide 3.</p>
+        </div>
+        <div class="image-container">
+            <!-- ここにランダムに配置された画像を追加 -->
+        </div>
+    </div>
+
+    <div class="slide" id="slide4">
+        <div class="slide-title">Title 4</div>
+        <div class="slide-content">
+            <p>This is the description for slide 4.</p>
+        </div>
+        <div class="image-container">
+            <!-- ここにランダムに配置された画像を追加 -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slides = document.querySelectorAll('.slide');
+            const animations = ['bounce', 'shake', 'pulse'];
+
+            slides.forEach((slide, index) => {
+                const imageContainer = slide.querySelector('.image-container');
+                const numImages = Math.floor(Math.random() * 4) + 5; // 5から8枚の画像をランダムに配置
+
+                for (let i = 0; i < numImages; i++) {
+                    const img = document.createElement('img');
+                    img.src = `../image/hobby/${index + 1}/${Math.floor(Math.random() * 10) + 1}.png`;
+                    img.style.left = `${Math.random() * 80 + 10}%`;
+                    img.style.top = `${Math.random() * 80 + 10}%`;
+                    img.classList.add(animations[Math.floor(Math.random() * animations.length)]);
+                    imageContainer.appendChild(img);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
