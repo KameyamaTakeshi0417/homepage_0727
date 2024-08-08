@@ -10,6 +10,9 @@
             padding: 0;
             font-family: Arial, sans-serif;
             overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            scroll-behavior: smooth;
         }
 
         .slide {
@@ -17,6 +20,7 @@
             align-items: center;
             height: 100vh;
             position: relative;
+            scroll-snap-align: start;
         }
 
         .left-images {
@@ -49,6 +53,7 @@
 
         .text-block {
             margin: 20px 0;
+            opacity: 0;
         }
 
         .slide-title {
@@ -122,20 +127,14 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const slides = document.querySelectorAll('.slide');
-            slides.forEach((slide, index) => {
-                const imageContainer = slide.querySelector('.left-images');
-                const numImages = Math.floor(Math.random() * 3) + 1; // 1から3枚の画像をランダムに配置
+            let currentSlide = 0;
+            let isAnimating = false;
 
-                for (let i = 0; i < numImages; i++) {
-                    const img = document.createElement('img');
-                    img.src = `../image/hobby/${index + 1}/${Math.floor(Math.random() * 10) + 1}.png`;
-                    imageContainer.appendChild(img);
-                }
-
-                // タイプライター効果の実装
+            function activateSlide(index) {
+                const slide = slides[index];
                 const textBlocks = slide.querySelectorAll('.text-block p');
                 const speed = slide.getAttribute('data-speed');
-
+                
                 textBlocks.forEach(block => {
                     const text = block.innerHTML;
                     block.innerHTML = '';
@@ -148,16 +147,42 @@
                             setTimeout(typeWriter, speed);
                         }
                     }
+                    block.parentElement.style.opacity = 1;
                     typeWriter();
                 });
-            });
-        });
+            }
 
-        window.addEventListener('beforeunload', function() {
-            const textBlocks = document.querySelectorAll('.text-block p');
-            textBlocks.forEach(block => {
-                block.innerHTML = ''; // テキスト表示量をリセット
+            function handleScroll(event) {
+                if (isAnimating) return;
+
+                const scrollPosition = window.scrollY || window.pageYOffset;
+                const slideHeight = window.innerHeight;
+
+                if (scrollPosition > (currentSlide * slideHeight + slideHeight * 0.5)) {
+                    if (currentSlide < slides.length - 1) {
+                        isAnimating = true;
+                        currentSlide++;
+                        window.scrollTo({ top: currentSlide * slideHeight, behavior: 'smooth' });
+                        setTimeout(() => {
+                            activateSlide(currentSlide);
+                            isAnimating = false;
+                        }, 1000);
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            // Reset text blocks when leaving the page
+            window.addEventListener('beforeunload', function() {
+                const textBlocks = document.querySelectorAll('.text-block p');
+                textBlocks.forEach(block => {
+                    block.innerHTML = ''; // テキスト表示量をリセット
+                });
             });
+
+            // Activate the first slide on load
+            activateSlide(currentSlide);
         });
     </script>
 </body>
