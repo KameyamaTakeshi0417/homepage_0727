@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hobby Page</title>
+    <link rel="stylesheet" href="../css/slidebar.css"> 
     <style>
         /* ページ全体の基本設定 */
         body, html {
@@ -89,9 +90,25 @@
             <canvas id="radarChart" width="300" height="300"></canvas> <!-- レーダーチャート用のキャンバス -->
         </div>
         <div class="right-text">
-            <div class="section-title">ステータス</div>
+            <div class="section-title">私の業務的ステータス</div>
             <div class="text-block">
                 <p>各能力値をチャートで表示しています。</p>
+            </div>
+            <div class="text-block">
+                <p>HP:</p>
+                <p>人並外れている。私のメインウェポン。自衛隊での経験に感謝。24時間戦える。</p>
+            </div>
+            <div class="text-block">
+                <p>MP:</p>
+                <p>ほぼ人並み。精神的負荷は体力でカバー。</p>
+            </div>
+            <div class="text-block">
+                <p>Pow:</p>
+                <p>人より少しある。負荷は大歓迎。</p>
+            </div>
+            <div class="text-block">
+                <p>Spd:</p>
+                <p>不安定。ノリにのった時の速度は我ながらな中々のもの。ここを高水準で安定させるのが私の課題。</p>
             </div>
         </div>
     </div>
@@ -124,37 +141,52 @@
             </div>
         </div>
     </div>
+    <!-- クリックボックス -->
+    <a href="../index.html" class="click-box"data-top="50px" data-left="0px">
+        <img src="../image/cliclbox/home.png" alt="home">
+        <span class="click-box-text">ホーム</span>
+    </a>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const sections = document.querySelectorAll('.section'); // 全てのセクション要素を取得
 
-            // セクションをアクティブ化してテキストを表示する関数
-            function activateSection(section) {
-                const textBlocks = section.querySelectorAll('.text-block p'); // セクション内の全てのテキストブロックを取得
-                const speed = section.getAttribute('data-speed'); // セクションに設定された表示速度を取得
-                
-                textBlocks.forEach(block => {
-                    const text = block.innerHTML; // テキストブロック内のテキストを取得
-                    block.innerHTML = ''; // タイプライター効果のためにテキストをリセット
-                    let i = 0;
+            // テキストブロックを順番に処理して表示する関数
+            function activateTextBlocks() {
+                sections.forEach(section => {
+                    const textBlocks = section.querySelectorAll('.text-block p'); // セクション内の全てのテキストブロックを取得
+                    const speed = section.getAttribute('data-speed'); // セクションに設定された表示速度を取得
+                    
+                    function showNextBlock(i) {
+                        if (i < textBlocks.length) {
+                            const block = textBlocks[i];
+                            const text = block.innerHTML;
+                            block.innerHTML = '';
+                            let j = 0;
 
-                    // タイプライター効果でテキストを1文字ずつ表示する関数
-                    function typeWriter() {
-                        if (i < text.length) {
-                            block.innerHTML += text.charAt(i); // 1文字ずつテキストを追加
-                            i++;
-                            setTimeout(typeWriter, speed); // 指定された速度で次の文字を表示
+                            // タイプライター効果でテキストを1文字ずつ表示する関数
+                            function typeWriter() {
+                                if (j < text.length) {
+                                    block.innerHTML += text.charAt(j); // 1文字ずつテキストを追加
+                                    j++;
+                                    setTimeout(typeWriter, speed); // 指定された速度で次の文字を表示
+                                } else {
+                                    block.parentElement.style.opacity = 1; // テキストブロックを表示
+                                    showNextBlock(i + 1); // 次のテキストブロックを表示
+                                }
+                            }
+                            block.parentElement.style.opacity = 1;
+                            typeWriter();
                         }
                     }
-                    block.parentElement.style.opacity = 1; // テキストブロックを表示
-                    typeWriter(); // タイプライター効果を開始
-                });
 
-                // セクション2が表示されたらレーダーチャートを描画
-                if (section.id === 'section2') {
-                    drawRadarChart();
-                }
+                    showNextBlock(0); // 最初のテキストブロックを表示
+
+                    // セクション2が表示されたらレーダーチャートを描画
+                    if (section.id === 'section2') {
+                        drawRadarChart();
+                    }
+                });
             }
 
             // レーダーチャートを描画する関数
@@ -166,7 +198,7 @@
                         labels: ['HP', 'MP', 'Pow', 'Tec', 'Spd'],
                         datasets: [{
                             label: 'ステータス',
-                            data: [4, 3, 5, 2, 4], // 各要素の値を0-5で指定
+                            data: [5, 4.0, 4.0, 3.5, 4.0], // 各要素の値を0-5で指定
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 2,
@@ -180,10 +212,28 @@
                         },
                         scales: {
                             r: {
+                                angleLines: {
+                                    display: true,
+                                    color: 'rgba(255, 99, 132, 0.5)'
+                                },
+                                grid: {
+                                    color: 'rgba(200, 200, 200, 0.5)'
+                                },
                                 ticks: {
                                     beginAtZero: true,
                                     min: 0,
-                                    max: 5
+                                    max: 5,
+                                    stepSize: 1, // 目盛りの間隔を明確にする
+                                    font: {
+                                        size: 12
+                                    },
+                                    color: 'rgba(0, 0, 0, 0.8)'
+                                },
+                                pointLabels: {
+                                    font: {
+                                        size: 14
+                                    },
+                                    color: 'rgba(0, 0, 0, 0.8)'
                                 }
                             }
                         }
@@ -191,22 +241,15 @@
                 });
             }
 
-            // スクロールイベントを処理する関数
-            function handleScroll() {
-                sections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top >= 0 && rect.top < window.innerHeight) {
-                        activateSection(section); // セクションがビューポート内に入ったらアクティブ化
-                    }
-                });
-            }
-
-            // スクロールイベントをリッスンして、handleScroll関数を呼び出す
-            window.addEventListener('scroll', handleScroll);
-
-            // ページ読み込み時にも一度呼び出す
-            handleScroll();
+            // ページ読み込み時にテキストを順次展開
+            activateTextBlocks();
         });
     </script>
+    <script>
+        document.querySelectorAll('.click-box').forEach(function(box) {
+            box.style.top = box.getAttribute('data-top');
+            box.style.left = box.getAttribute('data-left');
+        });
+        </script>
 </body>
 </html>
