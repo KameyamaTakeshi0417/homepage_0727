@@ -59,7 +59,6 @@
             margin-bottom: 20px;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.jsのCDNを読み込む -->
 </head>
 <body>
     <!-- 1つ目のセクション -->
@@ -84,10 +83,10 @@
         </div>
     </div>
 
-    <!-- 2つ目のセクション (レーダーチャートを含む) -->
+    <!-- 2つ目のセクション -->
     <div class="section" id="section2" data-speed="10">
         <div class="left-image">
-            <canvas id="radarChart" width="300" height="300"></canvas> <!-- レーダーチャート用のキャンバス -->
+            <img src="../image/profile/chart.png" alt="chart">
         </div>
         <div class="right-text">
             <div class="section-title">私の業務的ステータス</div>
@@ -105,6 +104,10 @@
             <div class="text-block">
                 <p>Pow:</p>
                 <p>人より少しある。負荷は大歓迎。</p>
+            </div>
+            <div class="text-block">
+                <p>Tec:</p>
+                <p>標準的。このホームページを組める程度のプログラミング能力。</p>
             </div>
             <div class="text-block">
                 <p>Spd:</p>
@@ -142,7 +145,7 @@
         </div>
     </div>
     <!-- クリックボックス -->
-    <a href="../index.html" class="click-box"data-top="50px" data-left="0px">
+    <a href="../index.html" class="click-box" data-top="50px" data-left="0px">
         <img src="../image/cliclbox/home.png" alt="home">
         <span class="click-box-text">ホーム</span>
     </a>
@@ -181,75 +184,19 @@
                     }
 
                     showNextBlock(0); // 最初のテキストブロックを表示
-
-                    // セクション2が表示されたらレーダーチャートを描画
-                    if (section.id === 'section2') {
-                        drawRadarChart();
-                    }
-                });
-            }
-
-            // レーダーチャートを描画する関数
-            function drawRadarChart() {
-                const ctx = document.getElementById('radarChart').getContext('2d');
-                const radarChart = new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['HP', 'MP', 'Pow', 'Tec', 'Spd'],
-                        datasets: [{
-                            label: 'ステータス',
-                            data: [5, 4.0, 4.0, 3.5, 4.0], // 各要素の値を0-5で指定
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 2,
-                            pointBackgroundColor: 'rgba(255, 99, 132, 1)'
-                        }]
-                    },
-                    options: {
-                        animation: {
-                            duration: 2000, // アニメーションの長さを2秒に設定
-                            easing: 'easeInOutQuad'
-                        },
-                        scales: {
-                            r: {
-                                angleLines: {
-                                    display: true,
-                                    color: 'rgba(255, 99, 132, 0.5)'
-                                },
-                                grid: {
-                                    color: 'rgba(200, 200, 200, 0.5)'
-                                },
-                                ticks: {
-                                    beginAtZero: true,
-                                    min: 0,
-                                    max: 5,
-                                    stepSize: 1, // 目盛りの間隔を明確にする
-                                    font: {
-                                        size: 12
-                                    },
-                                    color: 'rgba(0, 0, 0, 0.8)'
-                                },
-                                pointLabels: {
-                                    font: {
-                                        size: 14
-                                    },
-                                    color: 'rgba(0, 0, 0, 0.8)'
-                                }
-                            }
-                        }
-                    }
                 });
             }
 
             // ページ読み込み時にテキストを順次展開
             activateTextBlocks();
         });
+
     </script>
     <script>
         document.querySelectorAll('.click-box').forEach(function(box) {
             box.style.top = box.getAttribute('data-top');
             box.style.left = box.getAttribute('data-left');
         });
-        </script>
+    </script>
 </body>
 </html>
